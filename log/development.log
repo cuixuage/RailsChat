@@ -1,0 +1,626 @@
+  [1m[36m (16.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  select sqlite_version(*)
+  [1m[36m (9.4ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateUsers (20170218065508)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "email" varchar, "role" integer, "password_digest" varchar, "remember_digest" varchar, "sex" varchar, "phonenumber" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_users_on_name" ON "users" ("name")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20170218065508"]]
+  [1m[36m (13.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMessages (20170220073308)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "user_id" integer, "chat_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_messages_on_chat_id" ON "messages" ("chat_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170220073308"]]
+  [1m[35m (11.0ms)[0m  commit transaction
+Migrating to CreateChats (20170220110813)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "chats" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" varchar, "admin_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170220110813"]]
+  [1m[35m (12.8ms)[0m  commit transaction
+Migrating to ChatsUsers (20170220111114)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "chats_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "chat_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_chats_users_on_user_id" ON "chats_users" ("user_id")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_chats_users_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_chats_users_on_user_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_chats_users_on_chat_id" ON "chats_users" ("chat_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20170220111114"]]
+  [1m[36m (11.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateFriendships (20170228114534)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "friendships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "friend_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_friendships_on_user_id" ON "friendships" ("user_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_friendships_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_friendships_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_friendships_on_friend_id" ON "friendships" ("friend_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170228114534"]]
+  [1m[35m (12.2ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_chats_users_on_chat_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_chats_users_on_chat_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_chats_users_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_chats_users_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_friendships_on_friend_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_friendships_on_friend_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_friendships_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_friendships_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_chat_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_chat_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user1@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user1"], ["email", "user1@test.com"], ["password_digest", "$2a$10$zKiKM98qiLhY0YGFHoX2cuevwEyG9tTYS4A2mgDaFZ3L8sSz7jWAS"], ["role", 4], ["sex", "female"], ["phonenumber", "137-907-9580 x765"], ["status", "programmer"], ["created_at", "2017-12-11 10:06:46.843715"], ["updated_at", "2017-12-11 10:06:46.843715"]]
+  [1m[36m (11.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user2@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user2"], ["email", "user2@test.com"], ["password_digest", "$2a$10$BNyiHgjgJ/eKplpGQwyLOut4cTlaeFVEWOMZavkaLcYMsO6XxIVR."], ["role", 2], ["sex", "male"], ["phonenumber", "239-738-7586"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:46.929519"], ["updated_at", "2017-12-11 10:06:46.929519"]]
+  [1m[36m (11.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user3@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user3"], ["email", "user3@test.com"], ["password_digest", "$2a$10$OgD/WRe9zAX3UhrI0oI46uFOa1xgPhxlFaujo/kVqW09T3OsB5T1m"], ["role", 4], ["sex", "female"], ["phonenumber", "1-105-504-4937"], ["status", "designer"], ["created_at", "2017-12-11 10:06:47.014611"], ["updated_at", "2017-12-11 10:06:47.014611"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user4@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user4"], ["email", "user4@test.com"], ["password_digest", "$2a$10$7ztZY7jJtTIs/neWv5ry/eQ2sl2p4cZW/ufz5Acn/vI2gEt5sxHbO"], ["role", 3], ["sex", "male"], ["phonenumber", "1-221-874-1798 x048"], ["status", "biologist"], ["created_at", "2017-12-11 10:06:47.100197"], ["updated_at", "2017-12-11 10:06:47.100197"]]
+  [1m[36m (10.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user5@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user5"], ["email", "user5@test.com"], ["password_digest", "$2a$10$fSDg9Jt.3rGgDshqiTO1Q.wwfqqSc6G2S.zyvp1Poh8B51PS5msEO"], ["role", 3], ["sex", "female"], ["phonenumber", "712-374-1875"], ["status", "interpreter"], ["created_at", "2017-12-11 10:06:47.184911"], ["updated_at", "2017-12-11 10:06:47.184911"]]
+  [1m[36m (10.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user6@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user6"], ["email", "user6@test.com"], ["password_digest", "$2a$10$j.aS4rj703hiNBkyiZc2f.mfUypsbNUbvqJFOvN/qe21.v3Jw5GrS"], ["role", 1], ["sex", "female"], ["phonenumber", "1-807-650-7188 x8767"], ["status", "attorney at law"], ["created_at", "2017-12-11 10:06:47.269472"], ["updated_at", "2017-12-11 10:06:47.269472"]]
+  [1m[36m (9.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user7@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user7"], ["email", "user7@test.com"], ["password_digest", "$2a$10$MJ0omaTFF8gWMdWUKfkm6ewz1dbeS4iSC7uapIekNj/j9YbbmM4K6"], ["role", 3], ["sex", "female"], ["phonenumber", "861-878-7054 x813"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:47.352475"], ["updated_at", "2017-12-11 10:06:47.352475"]]
+  [1m[36m (11.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user8@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user8"], ["email", "user8@test.com"], ["password_digest", "$2a$10$U7gj5mOCBcTQHZRSPPzQXOnyWdo.IXAv1IhCYPESmwTPAB0mpzBDG"], ["role", 1], ["sex", "male"], ["phonenumber", "1-834-067-9215 x31371"], ["status", "statistician"], ["created_at", "2017-12-11 10:06:47.437568"], ["updated_at", "2017-12-11 10:06:47.437568"]]
+  [1m[36m (11.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user9@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user9"], ["email", "user9@test.com"], ["password_digest", "$2a$10$sXwwwXJDqOjd5u3YCuL19OPFIlroIS.DVem7jOcTsvkAXh5E.JY4q"], ["role", 3], ["sex", "female"], ["phonenumber", "(470) 210-6818 x22472"], ["status", "interpreter"], ["created_at", "2017-12-11 10:06:47.522286"], ["updated_at", "2017-12-11 10:06:47.522286"]]
+  [1m[36m (12.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user10@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user10"], ["email", "user10@test.com"], ["password_digest", "$2a$10$SL/erTy4/ktpRfbd0oj0AeKAXTUdScSbIPLR9kIU6p.TDF5.BnZrC"], ["role", 2], ["sex", "female"], ["phonenumber", "(562) 864-6577"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:47.612618"], ["updated_at", "2017-12-11 10:06:47.612618"]]
+  [1m[36m (12.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user11@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user11"], ["email", "user11@test.com"], ["password_digest", "$2a$10$Pl3USlH.zJr.GjKcc1tHvuzbUIqx35A.ESO.c5lQ8FyocMdFEngb6"], ["role", 2], ["sex", "male"], ["phonenumber", "275.937.9392"], ["status", "chemist"], ["created_at", "2017-12-11 10:06:47.699799"], ["updated_at", "2017-12-11 10:06:47.699799"]]
+  [1m[36m (10.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user12@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user12"], ["email", "user12@test.com"], ["password_digest", "$2a$10$c5ewgN2XdCb3XjhyHWYr3.n/pVAYv.uKFmLVRQbhEBkaC0lEUhSoi"], ["role", 3], ["sex", "male"], ["phonenumber", "1-635-992-1273"], ["status", "advocate"], ["created_at", "2017-12-11 10:06:47.784510"], ["updated_at", "2017-12-11 10:06:47.784510"]]
+  [1m[36m (10.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user13@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user13"], ["email", "user13@test.com"], ["password_digest", "$2a$10$RGkC4JPu0CpJRgPq29cKmeLW9daPO4J19gDpWNxnvNfmullmp64cO"], ["role", 2], ["sex", "male"], ["phonenumber", "(261) 285-5523 x519"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:47.870539"], ["updated_at", "2017-12-11 10:06:47.870539"]]
+  [1m[36m (12.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user14@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user14"], ["email", "user14@test.com"], ["password_digest", "$2a$10$T.CqpvO319EnZY4rAM3vmeQybnwN5EBSllZI0FcMTSyVAZ15XZm2i"], ["role", 3], ["sex", "male"], ["phonenumber", "(279) 956-6177 x067"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:47.970696"], ["updated_at", "2017-12-11 10:06:47.970696"]]
+  [1m[36m (11.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user15@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user15"], ["email", "user15@test.com"], ["password_digest", "$2a$10$BqEU3kupV.U.oVgEpGcjv.tsSNI9deje8FjPqglLcw0lReGR1Isn2"], ["role", 1], ["sex", "female"], ["phonenumber", "837-539-4290"], ["status", "architect"], ["created_at", "2017-12-11 10:06:48.056393"], ["updated_at", "2017-12-11 10:06:48.056393"]]
+  [1m[36m (10.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user16@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user16"], ["email", "user16@test.com"], ["password_digest", "$2a$10$/1m4PXYzRf32DrGEgBbqY.5Am1t59jG1yolS/r5i.DTSwSk4lVNAW"], ["role", 3], ["sex", "male"], ["phonenumber", "723.582.6809"], ["status", "writer"], ["created_at", "2017-12-11 10:06:48.142026"], ["updated_at", "2017-12-11 10:06:48.142026"]]
+  [1m[36m (13.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user17@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user17"], ["email", "user17@test.com"], ["password_digest", "$2a$10$qUPFXcD.D3gfsEb3eUI.KeAfwm0mt7KxlCzc9BDa042hrCNtvT0N."], ["role", 2], ["sex", "female"], ["phonenumber", "901.694.1290"], ["status", "attorney at law"], ["created_at", "2017-12-11 10:06:48.230239"], ["updated_at", "2017-12-11 10:06:48.230239"]]
+  [1m[36m (12.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user18@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user18"], ["email", "user18@test.com"], ["password_digest", "$2a$10$KcgNUy8DRoXqFdNMAkyIWuyqJHXmomi2zbzJOs5wybnd1jRUFzs9e"], ["role", 4], ["sex", "male"], ["phonenumber", "178.604.8360"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:48.316325"], ["updated_at", "2017-12-11 10:06:48.316325"]]
+  [1m[36m (11.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user19@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user19"], ["email", "user19@test.com"], ["password_digest", "$2a$10$ptJWIW4y1689waQi1f6B3eiAtrw2G9oLQxvY.fFX/N4cAyRVDi6wO"], ["role", 4], ["sex", "male"], ["phonenumber", "633.445.3014"], ["status", "astronomer"], ["created_at", "2017-12-11 10:06:48.401369"], ["updated_at", "2017-12-11 10:06:48.401369"]]
+  [1m[36m (10.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user20@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user20"], ["email", "user20@test.com"], ["password_digest", "$2a$10$Ydio7UeWRJiylsjCLqvSweRq6QsauFwoMXHAnvGv1pxPjrFg8j0Zi"], ["role", 4], ["sex", "female"], ["phonenumber", "565-163-7451"], ["status", "astronomer"], ["created_at", "2017-12-11 10:06:48.486450"], ["updated_at", "2017-12-11 10:06:48.486450"]]
+  [1m[36m (12.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user21@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user21"], ["email", "user21@test.com"], ["password_digest", "$2a$10$6zqzVt0qrXPL7lcH46SY5u2WI0Jl/1.9RdM7DlpkzKADpjGr6ysWi"], ["role", 3], ["sex", "female"], ["phonenumber", "1-872-269-0052 x86898"], ["status", "attorney at law"], ["created_at", "2017-12-11 10:06:48.572174"], ["updated_at", "2017-12-11 10:06:48.572174"]]
+  [1m[36m (8.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user22@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user22"], ["email", "user22@test.com"], ["password_digest", "$2a$10$/T4BT2V73AdsTqGCappbVOSuqgP4eSWTerxRowr2WlooTQn3QrhKG"], ["role", 3], ["sex", "male"], ["phonenumber", "(232) 638-5934"], ["status", "human resources"], ["created_at", "2017-12-11 10:06:48.654173"], ["updated_at", "2017-12-11 10:06:48.654173"]]
+  [1m[36m (14.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user23@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user23"], ["email", "user23@test.com"], ["password_digest", "$2a$10$3WU.n7F/0zq84LLdiTICA.rn16RuD2N9WdB7mktoaL77Vnml7JfVe"], ["role", 3], ["sex", "female"], ["phonenumber", "692-471-4597 x88141"], ["status", "architect"], ["created_at", "2017-12-11 10:06:48.742292"], ["updated_at", "2017-12-11 10:06:48.742292"]]
+  [1m[36m (12.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user24@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user24"], ["email", "user24@test.com"], ["password_digest", "$2a$10$xZ3sXd0ELuFJHKv0.xJVmO.9vksAGwRmHPWhst3qpEN2YDYeKovYK"], ["role", 3], ["sex", "male"], ["phonenumber", "(914) 622-5869 x43373"], ["status", "interpreter"], ["created_at", "2017-12-11 10:06:48.831163"], ["updated_at", "2017-12-11 10:06:48.831163"]]
+  [1m[36m (12.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user25@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user25"], ["email", "user25@test.com"], ["password_digest", "$2a$10$a8Xawno.feY2c2gqA4g9e.I8Gm6.eQA8uYyPExh5c72DgxC0Q6JrC"], ["role", 2], ["sex", "female"], ["phonenumber", "116-952-2988 x83205"], ["status", "programmer"], ["created_at", "2017-12-11 10:06:48.917818"], ["updated_at", "2017-12-11 10:06:48.917818"]]
+  [1m[36m (13.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user26@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user26"], ["email", "user26@test.com"], ["password_digest", "$2a$10$BrLkASIqUNngRmDSAh63geHrIPJ5MzxKHfzjMgxymVS1jak0D/T1C"], ["role", 2], ["sex", "female"], ["phonenumber", "200.692.5595 x862"], ["status", "musician"], ["created_at", "2017-12-11 10:06:49.005313"], ["updated_at", "2017-12-11 10:06:49.005313"]]
+  [1m[36m (13.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user27@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user27"], ["email", "user27@test.com"], ["password_digest", "$2a$10$kufY9IKoD18D2BJxtFHspuWVcJeywYz12GcCnKlfaM/9rkTTtv4Ia"], ["role", 4], ["sex", "male"], ["phonenumber", "947-957-3994 x643"], ["status", "doctor"], ["created_at", "2017-12-11 10:06:49.093815"], ["updated_at", "2017-12-11 10:06:49.093815"]]
+  [1m[36m (12.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user28@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user28"], ["email", "user28@test.com"], ["password_digest", "$2a$10$xUWStM8SgxX/mzD3Ih/sDuAl6ozLzXVVSFU0U4xgIjw8bj5xTW0QG"], ["role", 4], ["sex", "female"], ["phonenumber", "(544) 277-5577"], ["status", "web developer"], ["created_at", "2017-12-11 10:06:49.180047"], ["updated_at", "2017-12-11 10:06:49.180047"]]
+  [1m[36m (10.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user29@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user29"], ["email", "user29@test.com"], ["password_digest", "$2a$10$pWYkPSy8F8Way0oYV/mLy.QfddqIpyffwKlWk64/05mD73bKi5Mhe"], ["role", 2], ["sex", "female"], ["phonenumber", "127.885.9471"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:49.264003"], ["updated_at", "2017-12-11 10:06:49.264003"]]
+  [1m[36m (11.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user30@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user30"], ["email", "user30@test.com"], ["password_digest", "$2a$10$mjXTloTnt4HjDhbq.njXqOtPzLHBAF0sPBeQcPyM6KrUIFVWPoJ1O"], ["role", 3], ["sex", "female"], ["phonenumber", "210-768-1902"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:49.349641"], ["updated_at", "2017-12-11 10:06:49.349641"]]
+  [1m[36m (13.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user31@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user31"], ["email", "user31@test.com"], ["password_digest", "$2a$10$0/3ZbFN7jJu3QvRuxd3Pme5L9qCp9254wgGNI.8FDu59VW0HhOHJe"], ["role", 4], ["sex", "female"], ["phonenumber", "388.658.5438 x372"], ["status", "economist"], ["created_at", "2017-12-11 10:06:49.436409"], ["updated_at", "2017-12-11 10:06:49.436409"]]
+  [1m[36m (10.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user32@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user32"], ["email", "user32@test.com"], ["password_digest", "$2a$10$Q/lDyCMlBJlamJCAizKMqu4isL8M2P/etRKrV5pDf32fbHfVc9Ske"], ["role", 3], ["sex", "male"], ["phonenumber", "1-442-627-0027 x919"], ["status", "advocate"], ["created_at", "2017-12-11 10:06:49.521200"], ["updated_at", "2017-12-11 10:06:49.521200"]]
+  [1m[36m (13.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user33@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user33"], ["email", "user33@test.com"], ["password_digest", "$2a$10$o82fC45LkL.d1C3Sm5GOb.reuQBBrzlUtvdUqksIy82TPJ1u8enRW"], ["role", 3], ["sex", "female"], ["phonenumber", "(650) 324-2000 x7082"], ["status", "judge"], ["created_at", "2017-12-11 10:06:49.610224"], ["updated_at", "2017-12-11 10:06:49.610224"]]
+  [1m[36m (13.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user34@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user34"], ["email", "user34@test.com"], ["password_digest", "$2a$10$QNJG7577nhySTZe2bn8vaOSMEwv5UMaIzXkeRMGgFNjkSq.S375Zi"], ["role", 1], ["sex", "female"], ["phonenumber", "521.171.8721 x878"], ["status", "programmer"], ["created_at", "2017-12-11 10:06:49.697762"], ["updated_at", "2017-12-11 10:06:49.697762"]]
+  [1m[36m (10.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user35@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user35"], ["email", "user35@test.com"], ["password_digest", "$2a$10$Lh7vmvRU5Bw5nS8JV32uTuPpJLjaPB549J/.Dz4g272DSDVZHdN2e"], ["role", 2], ["sex", "male"], ["phonenumber", "527.399.7685 x678"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:49.782197"], ["updated_at", "2017-12-11 10:06:49.782197"]]
+  [1m[36m (12.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user36@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user36"], ["email", "user36@test.com"], ["password_digest", "$2a$10$KepjjSOagVNXbn0mUYUiR.TlAtE8WvjVQZstBMeJwJRFoRLb1IWGW"], ["role", 1], ["sex", "female"], ["phonenumber", "772.981.1203 x75578"], ["status", "actor"], ["created_at", "2017-12-11 10:06:49.868571"], ["updated_at", "2017-12-11 10:06:49.868571"]]
+  [1m[36m (14.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user37@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user37"], ["email", "user37@test.com"], ["password_digest", "$2a$10$Nf4OBixnCxxfnVDs.8DI7OzNy28UJ1fEUGNRbeAHKBN.aCCYK.fUq"], ["role", 1], ["sex", "female"], ["phonenumber", "(369) 980-1083"], ["status", "interpreter"], ["created_at", "2017-12-11 10:06:49.958241"], ["updated_at", "2017-12-11 10:06:49.958241"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user38@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user38"], ["email", "user38@test.com"], ["password_digest", "$2a$10$EJRCWRdWBR68sW5sPRczf.AYlehUyA2BEx5.OIuK4QoSLZgEf4zZK"], ["role", 2], ["sex", "male"], ["phonenumber", "763-335-0164"], ["status", "human resources"], ["created_at", "2017-12-11 10:06:50.045383"], ["updated_at", "2017-12-11 10:06:50.045383"]]
+  [1m[36m (10.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user39@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user39"], ["email", "user39@test.com"], ["password_digest", "$2a$10$W3Sb1LlE6WNH/44EG/RJ3uVZpYwJVu7TegBN67ZpUGQWFm8LKYa9."], ["role", 3], ["sex", "male"], ["phonenumber", "455-879-6069 x693"], ["status", "judge"], ["created_at", "2017-12-11 10:06:50.130342"], ["updated_at", "2017-12-11 10:06:50.130342"]]
+  [1m[36m (11.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user40@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user40"], ["email", "user40@test.com"], ["password_digest", "$2a$10$8txvDMfDx1KWX/eIESrkxOmh3VgzJr9KBInZiNgbTl1DS5zI.6oDe"], ["role", 3], ["sex", "male"], ["phonenumber", "871-252-3711 x6606"], ["status", "astronomer"], ["created_at", "2017-12-11 10:06:50.215830"], ["updated_at", "2017-12-11 10:06:50.215830"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user41@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user41"], ["email", "user41@test.com"], ["password_digest", "$2a$10$O2gf8HIeYZ.Nh3EjlCte/OMjk4/rZicmDPuW1ueLwkeGt3lN1SlcK"], ["role", 2], ["sex", "female"], ["phonenumber", "(152) 681-9289 x234"], ["status", "agriculturist"], ["created_at", "2017-12-11 10:06:50.301854"], ["updated_at", "2017-12-11 10:06:50.301854"]]
+  [1m[36m (10.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user42@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user42"], ["email", "user42@test.com"], ["password_digest", "$2a$10$qKYzZqgjAjh2h36Zs03jsOn/.rq7ZI9FO54Oz/HI2QQM3GtO9j9tm"], ["role", 1], ["sex", "female"], ["phonenumber", "186.460.7235"], ["status", "agriculturist"], ["created_at", "2017-12-11 10:06:50.388359"], ["updated_at", "2017-12-11 10:06:50.388359"]]
+  [1m[36m (10.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user43@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user43"], ["email", "user43@test.com"], ["password_digest", "$2a$10$IbKMTFYeEkC8GbN5snCdeuayiyd5VJTKAGUwPva2/1NjukExq9R/u"], ["role", 2], ["sex", "male"], ["phonenumber", "1-784-857-0973 x04519"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:50.472919"], ["updated_at", "2017-12-11 10:06:50.472919"]]
+  [1m[36m (10.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user44@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user44"], ["email", "user44@test.com"], ["password_digest", "$2a$10$2Ock0DpidrOIixmVaL12JeH0c0bc2qh8zXRlwdoEvXdz3DbdIj6pe"], ["role", 3], ["sex", "male"], ["phonenumber", "1-474-484-7927"], ["status", "doctor"], ["created_at", "2017-12-11 10:06:50.557463"], ["updated_at", "2017-12-11 10:06:50.557463"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user45@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user45"], ["email", "user45@test.com"], ["password_digest", "$2a$10$iaWlqExFAdbwu/9eqFD2qOiFvJ9G94ZFx4xaQ4hGMiWNSC1/A8bp."], ["role", 1], ["sex", "female"], ["phonenumber", "1-280-877-8665 x41161"], ["status", "police officer"], ["created_at", "2017-12-11 10:06:50.643798"], ["updated_at", "2017-12-11 10:06:50.643798"]]
+  [1m[36m (10.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user46@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user46"], ["email", "user46@test.com"], ["password_digest", "$2a$10$UQyX9bPqu4fpD1IhJrN3aOOrKLoyVqGpBinp949E2LBRBb29TaqUW"], ["role", 2], ["sex", "male"], ["phonenumber", "1-912-934-9003 x978"], ["status", "writer"], ["created_at", "2017-12-11 10:06:50.728927"], ["updated_at", "2017-12-11 10:06:50.728927"]]
+  [1m[36m (13.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user47@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user47"], ["email", "user47@test.com"], ["password_digest", "$2a$10$IXkbjbsxmrRU.5Mn4nhwi.kxLXdtVZLhk1imYZMNru32nWY/RpPHa"], ["role", 4], ["sex", "female"], ["phonenumber", "(991) 444-5648 x1597"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:50.817023"], ["updated_at", "2017-12-11 10:06:50.817023"]]
+  [1m[36m (11.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user48@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user48"], ["email", "user48@test.com"], ["password_digest", "$2a$10$rkldGm/BQM0FY6D4y1JwKudZ8o8AeRBoelMlVbB1jaAhlot0KODG6"], ["role", 3], ["sex", "female"], ["phonenumber", "1-395-091-9089"], ["status", "attorney at law"], ["created_at", "2017-12-11 10:06:50.902276"], ["updated_at", "2017-12-11 10:06:50.902276"]]
+  [1m[36m (10.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user49@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user49"], ["email", "user49@test.com"], ["password_digest", "$2a$10$iQi167xQoscfzNiiu1KoZ.2sAO/zUAziKICl3LmfftBHdtCVfat.2"], ["role", 4], ["sex", "male"], ["phonenumber", "293-675-8241 x88879"], ["status", "engineer"], ["created_at", "2017-12-11 10:06:50.986904"], ["updated_at", "2017-12-11 10:06:50.986904"]]
+  [1m[36m (12.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user50@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user50"], ["email", "user50@test.com"], ["password_digest", "$2a$10$ybaJBGG2/1B26j1NimxREulIWqdwC99qCoPlSUA/zsK7/2e1kV2Oy"], ["role", 3], ["sex", "male"], ["phonenumber", "137-519-1547 x2048"], ["status", "writer"], ["created_at", "2017-12-11 10:06:51.073228"], ["updated_at", "2017-12-11 10:06:51.073228"]]
+  [1m[36m (10.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user51@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user51"], ["email", "user51@test.com"], ["password_digest", "$2a$10$OxwUMRzR/VVYEOOpBWS76u2vSD/GP5zY4RWkUBmZ4G5oRScaAIHOe"], ["role", 3], ["sex", "male"], ["phonenumber", "(244) 411-7766"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:51.158642"], ["updated_at", "2017-12-11 10:06:51.158642"]]
+  [1m[36m (12.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user52@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user52"], ["email", "user52@test.com"], ["password_digest", "$2a$10$Bwq3AiVXtYrGkmW6r93ROOGVwf7eBPEt5mezEIhspSVhJC5e4zLZq"], ["role", 1], ["sex", "male"], ["phonenumber", "(211) 686-5523 x124"], ["status", "musician"], ["created_at", "2017-12-11 10:06:51.245308"], ["updated_at", "2017-12-11 10:06:51.245308"]]
+  [1m[36m (13.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user53@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user53"], ["email", "user53@test.com"], ["password_digest", "$2a$10$PYwbXVNuS0XPVQoHDqlax.Dh3JqMckJ0ExFzBazgyZhiaHY9wuSqS"], ["role", 2], ["sex", "female"], ["phonenumber", "1-887-992-9481 x951"], ["status", "agriculturist"], ["created_at", "2017-12-11 10:06:51.332703"], ["updated_at", "2017-12-11 10:06:51.332703"]]
+  [1m[36m (10.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user54@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user54"], ["email", "user54@test.com"], ["password_digest", "$2a$10$64A/X4A9Emc9zEYMYP/oD.ejlajYIosYH1O7Lr/HWZQuUxWd8t0jG"], ["role", 4], ["sex", "female"], ["phonenumber", "742-066-4316"], ["status", "astronomer"], ["created_at", "2017-12-11 10:06:51.422193"], ["updated_at", "2017-12-11 10:06:51.422193"]]
+  [1m[36m (12.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user55@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user55"], ["email", "user55@test.com"], ["password_digest", "$2a$10$Z50zdaD6fuFMt3SRiOk3aOoZrCHil0sRO2/foouAQbeQc62uLEF9C"], ["role", 3], ["sex", "female"], ["phonenumber", "(662) 328-9572 x9324"], ["status", "judge"], ["created_at", "2017-12-11 10:06:51.510764"], ["updated_at", "2017-12-11 10:06:51.510764"]]
+  [1m[36m (13.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user56@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user56"], ["email", "user56@test.com"], ["password_digest", "$2a$10$r2WAuCmGRaWyIAYbIqVcHeyFDMmje5k6QnFVbZvLY2oLt9FtJsMQq"], ["role", 1], ["sex", "male"], ["phonenumber", "1-348-034-0674 x18811"], ["status", "attorney at law"], ["created_at", "2017-12-11 10:06:51.598664"], ["updated_at", "2017-12-11 10:06:51.598664"]]
+  [1m[36m (13.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user57@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user57"], ["email", "user57@test.com"], ["password_digest", "$2a$10$Z1JN0pJ6wPzAC93qno6PdeN226t8sNg99Crr54RZNzCSfI5NwILoK"], ["role", 4], ["sex", "male"], ["phonenumber", "163.171.2319 x106"], ["status", "police officer"], ["created_at", "2017-12-11 10:06:51.686293"], ["updated_at", "2017-12-11 10:06:51.686293"]]
+  [1m[36m (11.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user58@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user58"], ["email", "user58@test.com"], ["password_digest", "$2a$10$SS/a4XF.QnlGrnmLgN3CTO37ThRy4PWihRK6dOsqElNkjkAOvcmfe"], ["role", 2], ["sex", "female"], ["phonenumber", "1-667-025-4372"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:51.771908"], ["updated_at", "2017-12-11 10:06:51.771908"]]
+  [1m[36m (23.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user59@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user59"], ["email", "user59@test.com"], ["password_digest", "$2a$10$Lv9wrfaKbcDyjIFoOp3EeecIR/y0HMeFyMpXLt0q5XRThabgMmmgy"], ["role", 1], ["sex", "female"], ["phonenumber", "(191) 130-5968"], ["status", "chemist"], ["created_at", "2017-12-11 10:06:51.869940"], ["updated_at", "2017-12-11 10:06:51.869940"]]
+  [1m[36m (13.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user60@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user60"], ["email", "user60@test.com"], ["password_digest", "$2a$10$Bgtrqmzgplt0TpxX1fuJTOBKiU1onmd36vzSyoA4p5n2.Td3boyJ."], ["role", 4], ["sex", "female"], ["phonenumber", "1-592-181-6493 x6769"], ["status", "advocate"], ["created_at", "2017-12-11 10:06:51.958863"], ["updated_at", "2017-12-11 10:06:51.958863"]]
+  [1m[36m (13.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user61@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user61"], ["email", "user61@test.com"], ["password_digest", "$2a$10$t2VWgu0TM4qefcnPD16uLeDWWkL.kk01mzhqzawOGhO6jj7uDfuby"], ["role", 1], ["sex", "male"], ["phonenumber", "1-476-359-7586 x73749"], ["status", "human resources"], ["created_at", "2017-12-11 10:06:52.046841"], ["updated_at", "2017-12-11 10:06:52.046841"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user62@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user62"], ["email", "user62@test.com"], ["password_digest", "$2a$10$XgTBsTajKYJ9kMqiBRToQen9CvPu02dxxcgkyG/VHsj5opgpQJPUS"], ["role", 4], ["sex", "female"], ["phonenumber", "506.670.7050 x852"], ["status", "police officer"], ["created_at", "2017-12-11 10:06:52.133453"], ["updated_at", "2017-12-11 10:06:52.133453"]]
+  [1m[36m (13.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user63@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user63"], ["email", "user63@test.com"], ["password_digest", "$2a$10$0dJDhsz5pqjkbkdBOKIzFOtLxxTDr5DTUZ3ALPv.V5KniS24RtyEa"], ["role", 3], ["sex", "female"], ["phonenumber", "453.486.8356 x6172"], ["status", "writer"], ["created_at", "2017-12-11 10:06:52.222089"], ["updated_at", "2017-12-11 10:06:52.222089"]]
+  [1m[36m (12.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user64@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user64"], ["email", "user64@test.com"], ["password_digest", "$2a$10$GGDvNuL/Eh7mVs4Muoqz4uklPOx3u79Hix1UXS8hED9Cmf6ev/QUC"], ["role", 1], ["sex", "male"], ["phonenumber", "903.060.4893 x12712"], ["status", "economist"], ["created_at", "2017-12-11 10:06:52.310150"], ["updated_at", "2017-12-11 10:06:52.310150"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user65@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user65"], ["email", "user65@test.com"], ["password_digest", "$2a$10$B9IBYdrBE.5.aVLPddu0euWcQXkhc4czBqN7ay.elJtHDa7iC8QW2"], ["role", 4], ["sex", "male"], ["phonenumber", "(456) 727-1508"], ["status", "writer"], ["created_at", "2017-12-11 10:06:52.396527"], ["updated_at", "2017-12-11 10:06:52.396527"]]
+  [1m[36m (9.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user66@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user66"], ["email", "user66@test.com"], ["password_digest", "$2a$10$wzecEqT3Y4u9y5pNHsvnI.xNeDL9QcYSVk2WZZvPygv1SdsCEyK2W"], ["role", 1], ["sex", "male"], ["phonenumber", "962.380.2307 x107"], ["status", "statistician"], ["created_at", "2017-12-11 10:06:52.480505"], ["updated_at", "2017-12-11 10:06:52.480505"]]
+  [1m[36m (10.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user67@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user67"], ["email", "user67@test.com"], ["password_digest", "$2a$10$Tb71dYHF/x9vFx3A96/OYOeqADDOK8P0kx3vcewfQXLwH7OpAYG1S"], ["role", 3], ["sex", "male"], ["phonenumber", "786-533-6287"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:52.566514"], ["updated_at", "2017-12-11 10:06:52.566514"]]
+  [1m[36m (13.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user68@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user68"], ["email", "user68@test.com"], ["password_digest", "$2a$10$HDl8PfKItbApO4JjYvN9B.zCl8fvs4l05rkJKkB8imPeVYbRblyza"], ["role", 4], ["sex", "male"], ["phonenumber", "(198) 001-0376 x563"], ["status", "police officer"], ["created_at", "2017-12-11 10:06:52.657873"], ["updated_at", "2017-12-11 10:06:52.657873"]]
+  [1m[36m (8.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user69@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user69"], ["email", "user69@test.com"], ["password_digest", "$2a$10$Hr.dOa5rbzSLZ.P2DYtctuMc8vToAN6/YfGTgiVU3xAc2rTxVyoM6"], ["role", 3], ["sex", "male"], ["phonenumber", "506.689.6412"], ["status", "librarian"], ["created_at", "2017-12-11 10:06:52.742813"], ["updated_at", "2017-12-11 10:06:52.742813"]]
+  [1m[36m (12.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user70@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user70"], ["email", "user70@test.com"], ["password_digest", "$2a$10$2dQDwtnhsRLxJSG8iw3dReycZUFmO09Stgrmu22yaRyPOq1f19Qcm"], ["role", 1], ["sex", "male"], ["phonenumber", "656.316.5869"], ["status", "biologist"], ["created_at", "2017-12-11 10:06:52.831298"], ["updated_at", "2017-12-11 10:06:52.831298"]]
+  [1m[36m (12.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user71@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user71"], ["email", "user71@test.com"], ["password_digest", "$2a$10$4W15Lr/TQpKaDL/PCJ3.QeD1DBrlQMbRbOROYRgaND9sUH.TkknO."], ["role", 1], ["sex", "female"], ["phonenumber", "1-261-767-3219 x7086"], ["status", "firefighter"], ["created_at", "2017-12-11 10:06:52.918432"], ["updated_at", "2017-12-11 10:06:52.918432"]]
+  [1m[36m (14.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user72@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user72"], ["email", "user72@test.com"], ["password_digest", "$2a$10$.fn4eVF8Glialf4slXYtuelknK.K84.MyK9u.MXlvBZ2eZna5QGIC"], ["role", 3], ["sex", "male"], ["phonenumber", "726.233.8542"], ["status", "writer"], ["created_at", "2017-12-11 10:06:53.008934"], ["updated_at", "2017-12-11 10:06:53.008934"]]
+  [1m[36m (10.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user73@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user73"], ["email", "user73@test.com"], ["password_digest", "$2a$10$aWrrx/DqRPvT/4Q/G/bhqubiztc2KxGuccIyCZiIiJp.Ond1Ib2zq"], ["role", 4], ["sex", "female"], ["phonenumber", "473.423.5401"], ["status", "agriculturist"], ["created_at", "2017-12-11 10:06:53.095514"], ["updated_at", "2017-12-11 10:06:53.095514"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user74@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user74"], ["email", "user74@test.com"], ["password_digest", "$2a$10$alxrPgit8I/H/qFihAITYOfdT0.cYb65S6XXpQOOxHUsx7GOOwPsm"], ["role", 4], ["sex", "male"], ["phonenumber", "240-799-5406"], ["status", "musician"], ["created_at", "2017-12-11 10:06:53.182563"], ["updated_at", "2017-12-11 10:06:53.182563"]]
+  [1m[36m (12.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user75@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user75"], ["email", "user75@test.com"], ["password_digest", "$2a$10$szbQMHGBXZtUqqnDBIA9m.FtHl27PH33xm/pLKe4lw01KAwzs.7LO"], ["role", 1], ["sex", "male"], ["phonenumber", "(334) 292-6178"], ["status", "chemist"], ["created_at", "2017-12-11 10:06:53.268767"], ["updated_at", "2017-12-11 10:06:53.268767"]]
+  [1m[36m (11.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user76@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user76"], ["email", "user76@test.com"], ["password_digest", "$2a$10$Z3igW8fbBeljXD1KnWFvS.Uhw1l69N9msQ7NCaI0GC3OVQs2Pblma"], ["role", 1], ["sex", "male"], ["phonenumber", "798.607.2792 x835"], ["status", "judge"], ["created_at", "2017-12-11 10:06:53.354904"], ["updated_at", "2017-12-11 10:06:53.354904"]]
+  [1m[36m (15.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mUser Exists (0.6ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user77@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user77"], ["email", "user77@test.com"], ["password_digest", "$2a$10$58CGXLyiKIJ.WgMVP7kX/uU99FUf95XN8makVUI/.h6qQ3NJE7MUK"], ["role", 3], ["sex", "male"], ["phonenumber", "1-860-115-7599"], ["status", "writer"], ["created_at", "2017-12-11 10:06:53.446456"], ["updated_at", "2017-12-11 10:06:53.446456"]]
+  [1m[36m (13.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user78@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user78"], ["email", "user78@test.com"], ["password_digest", "$2a$10$TJ6ovNJC0h624bP7m0NJpu.93W7yRsoMBHkAH7vSGN5R/Yz3Nxg/m"], ["role", 1], ["sex", "male"], ["phonenumber", "(965) 962-4683 x026"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:53.537692"], ["updated_at", "2017-12-11 10:06:53.537692"]]
+  [1m[36m (13.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user79@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user79"], ["email", "user79@test.com"], ["password_digest", "$2a$10$ujIgGV8P1Ur3xNP5phFn.eOJF.Eqmicdk2fJjK6SSLrRxd7kohfye"], ["role", 3], ["sex", "female"], ["phonenumber", "1-468-572-2522"], ["status", "accountant"], ["created_at", "2017-12-11 10:06:53.626826"], ["updated_at", "2017-12-11 10:06:53.626826"]]
+  [1m[36m (16.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user80@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user80"], ["email", "user80@test.com"], ["password_digest", "$2a$10$CXR7tC8eNbb.yk1PM.bd8.rl.H8/Q9htDOOHVShi3C6c02bVsRNUK"], ["role", 4], ["sex", "male"], ["phonenumber", "(278) 492-1231 x6947"], ["status", "designer"], ["created_at", "2017-12-11 10:06:53.716503"], ["updated_at", "2017-12-11 10:06:53.716503"]]
+  [1m[36m (11.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user81@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user81"], ["email", "user81@test.com"], ["password_digest", "$2a$10$GsaIuL67GjoQYunHFttkpeEpIKA5PWPWs4h1gEc92whOgfnnSX17i"], ["role", 4], ["sex", "male"], ["phonenumber", "745.108.4991 x96101"], ["status", "designer"], ["created_at", "2017-12-11 10:06:53.802755"], ["updated_at", "2017-12-11 10:06:53.802755"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user82@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user82"], ["email", "user82@test.com"], ["password_digest", "$2a$10$H3Hy5iRMGRyNETGN.R./j.00Wcm0cIl12QtfPlAt9snkz2VwkWPeC"], ["role", 1], ["sex", "male"], ["phonenumber", "(300) 430-7201"], ["status", "statistician"], ["created_at", "2017-12-11 10:06:53.889609"], ["updated_at", "2017-12-11 10:06:53.889609"]]
+  [1m[36m (12.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user83@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user83"], ["email", "user83@test.com"], ["password_digest", "$2a$10$4Uue6B94TiGhEju4zmP6fOcqZQLQ1ajg1.NbRN0MRiOb.MJKkhph."], ["role", 2], ["sex", "male"], ["phonenumber", "(951) 246-1813 x15737"], ["status", "astronomer"], ["created_at", "2017-12-11 10:06:53.977426"], ["updated_at", "2017-12-11 10:06:53.977426"]]
+  [1m[36m (13.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user84@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user84"], ["email", "user84@test.com"], ["password_digest", "$2a$10$icDR5zlMnUMaj6EnOydRpuiCBrue6UHG1tSBCbtrfNdKcYRWoDdgS"], ["role", 1], ["sex", "female"], ["phonenumber", "1-978-383-8275 x7041"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:54.066536"], ["updated_at", "2017-12-11 10:06:54.066536"]]
+  [1m[36m (12.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user85@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user85"], ["email", "user85@test.com"], ["password_digest", "$2a$10$02z3P1Jde47uT/JBkuI7YONqJUr.TzH1EtVkNBAQF2oa9EoV75EQ2"], ["role", 1], ["sex", "male"], ["phonenumber", "1-530-786-1047 x6522"], ["status", "designer"], ["created_at", "2017-12-11 10:06:54.153303"], ["updated_at", "2017-12-11 10:06:54.153303"]]
+  [1m[36m (14.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user86@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user86"], ["email", "user86@test.com"], ["password_digest", "$2a$10$CDtZXo8F.EO8yzimATFaLeYtvKiW3eApCOhpCut.QDxjwnlUk9Or."], ["role", 1], ["sex", "male"], ["phonenumber", "(394) 813-9944 x913"], ["status", "advocate"], ["created_at", "2017-12-11 10:06:54.244201"], ["updated_at", "2017-12-11 10:06:54.244201"]]
+  [1m[36m (11.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user87@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user87"], ["email", "user87@test.com"], ["password_digest", "$2a$10$85740PHDuz94GSNqbeNKxOvq95xBbvf2nBsRNMv/DkeMt52rKGTwW"], ["role", 4], ["sex", "male"], ["phonenumber", "(946) 092-0666"], ["status", "chemist"], ["created_at", "2017-12-11 10:06:54.329754"], ["updated_at", "2017-12-11 10:06:54.329754"]]
+  [1m[36m (10.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user88@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user88"], ["email", "user88@test.com"], ["password_digest", "$2a$10$aWurzZLAN1w3ZXRSxEPf.e/8XYDYjkNLA38YeG7M/Tlle.Xh42OIG"], ["role", 2], ["sex", "female"], ["phonenumber", "680-405-6343"], ["status", "physicist"], ["created_at", "2017-12-11 10:06:54.416196"], ["updated_at", "2017-12-11 10:06:54.416196"]]
+  [1m[36m (14.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user89@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user89"], ["email", "user89@test.com"], ["password_digest", "$2a$10$VkD8sYfMPCBhfJtA/kfDcOxlPQKuf4ceMVhRNMhm9OI5XfYWQLfte"], ["role", 4], ["sex", "female"], ["phonenumber", "(585) 008-6613"], ["status", "programmer"], ["created_at", "2017-12-11 10:06:54.507380"], ["updated_at", "2017-12-11 10:06:54.507380"]]
+  [1m[36m (11.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user90@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user90"], ["email", "user90@test.com"], ["password_digest", "$2a$10$ebrScYULYVsujUgl3.9gRO2GTaDavhiKijargo6hm3thYDFmLakVy"], ["role", 4], ["sex", "male"], ["phonenumber", "(710) 489-9108 x9164"], ["status", "doctor"], ["created_at", "2017-12-11 10:06:54.598192"], ["updated_at", "2017-12-11 10:06:54.598192"]]
+  [1m[36m (28.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user91@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user91"], ["email", "user91@test.com"], ["password_digest", "$2a$10$9spAOLdxkStXWfJJvrU1/eoNshdZb8yUJmuaY.vfJN2kGn04w2jje"], ["role", 2], ["sex", "female"], ["phonenumber", "(749) 650-5367"], ["status", "biologist"], ["created_at", "2017-12-11 10:06:54.704261"], ["updated_at", "2017-12-11 10:06:54.704261"]]
+  [1m[36m (10.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.6ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user92@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user92"], ["email", "user92@test.com"], ["password_digest", "$2a$10$BGiWTRZ5bTLUr1kx11gXau1i0/oILuwFjEh.QJ/e9dHrczy5uAzKu"], ["role", 2], ["sex", "male"], ["phonenumber", "(969) 235-2287 x77996"], ["status", "doctor"], ["created_at", "2017-12-11 10:06:54.827088"], ["updated_at", "2017-12-11 10:06:54.827088"]]
+  [1m[36m (11.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user93@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user93"], ["email", "user93@test.com"], ["password_digest", "$2a$10$DndSLiyNclA6JGBkYaHiGuROO5vDPpKP2pEAwI3dliz3fR7eUyk1K"], ["role", 1], ["sex", "male"], ["phonenumber", "827.959.0277 x21603"], ["status", "police officer"], ["created_at", "2017-12-11 10:06:54.913694"], ["updated_at", "2017-12-11 10:06:54.913694"]]
+  [1m[36m (10.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user94@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user94"], ["email", "user94@test.com"], ["password_digest", "$2a$10$yIZyp9ogVWxMaHrZhloWGuXzozCVrWwGqle/5Nfqh6gKNNhlAJZ1i"], ["role", 1], ["sex", "female"], ["phonenumber", "877.767.0477 x833"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:55.000524"], ["updated_at", "2017-12-11 10:06:55.000524"]]
+  [1m[36m (13.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user95@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user95"], ["email", "user95@test.com"], ["password_digest", "$2a$10$pZraKG8hn8BLE54Uxom3U.e9e9dGf6cSkgAx9dIQ3rHhm3eTf/x1y"], ["role", 3], ["sex", "female"], ["phonenumber", "(484) 676-8983"], ["status", "teacher"], ["created_at", "2017-12-11 10:06:55.088289"], ["updated_at", "2017-12-11 10:06:55.088289"]]
+  [1m[36m (7.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user96@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user96"], ["email", "user96@test.com"], ["password_digest", "$2a$10$n2mfqOShJDCtZFvrF.X2vOJ4GZegm.KjekuL6/G4JNlRcO9A./Cz."], ["role", 4], ["sex", "female"], ["phonenumber", "(512) 588-7613 x73508"], ["status", "doctor"], ["created_at", "2017-12-11 10:06:55.169481"], ["updated_at", "2017-12-11 10:06:55.169481"]]
+  [1m[36m (10.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user97@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user97"], ["email", "user97@test.com"], ["password_digest", "$2a$10$fGrjgAKICvW7f0xn6Ysr6.lrJVw0.YpPIZ4ajeRJRwcGrw3.pzRCy"], ["role", 2], ["sex", "male"], ["phonenumber", "1-293-390-9302 x09002"], ["status", "designer"], ["created_at", "2017-12-11 10:06:55.255270"], ["updated_at", "2017-12-11 10:06:55.255270"]]
+  [1m[36m (13.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user98@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user98"], ["email", "user98@test.com"], ["password_digest", "$2a$10$MEf4jsT.zhedzE2nWWdVcuejNd94hUikv3oxTMvqK5Mve4yBic5oe"], ["role", 3], ["sex", "female"], ["phonenumber", "(561) 386-0135"], ["status", "judge"], ["created_at", "2017-12-11 10:06:55.342664"], ["updated_at", "2017-12-11 10:06:55.342664"]]
+  [1m[36m (12.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user99@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user99"], ["email", "user99@test.com"], ["password_digest", "$2a$10$0.BxiG/0/RZ./SvhxXoYq.XkAgHwr3j8NKxZxmO.GTDkobYiJOK9O"], ["role", 4], ["sex", "male"], ["phonenumber", "227-830-8777 x662"], ["status", "agriculturist"], ["created_at", "2017-12-11 10:06:55.429750"], ["updated_at", "2017-12-11 10:06:55.429750"]]
+  [1m[36m (10.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user100@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "role", "sex", "phonenumber", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "user100"], ["email", "user100@test.com"], ["password_digest", "$2a$10$ikPqW7Ox0Vtswn7tACbQ..sv2mOFvqkUXUEhyEo1AwA2PFlcyOnAa"], ["role", 4], ["sex", "male"], ["phonenumber", "752-624-9666"], ["status", "philosopher"], ["created_at", "2017-12-11 10:06:55.517399"], ["updated_at", "2017-12-11 10:06:55.517399"]]
+  [1m[36m (18.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "friendships" ("friend_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["friend_id", 2], ["user_id", 1], ["created_at", "2017-12-11 10:06:55.582172"], ["updated_at", "2017-12-11 10:06:55.582172"]]
+  [1m[36m (13.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "friendships" ("friend_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["friend_id", 3], ["user_id", 1], ["created_at", "2017-12-11 10:06:55.600578"], ["updated_at", "2017-12-11 10:06:55.600578"]]
+  [1m[36m (10.8ms)[0m  [1mcommit transaction[0m
+
+
+Started GET "/" for 10.240.0.105 at 2017-12-11 10:15:20 +0000
+Cannot render console from 10.240.0.105! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomesController#home as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered homes/home.html.erb within layouts/application (78.0ms)
+  Rendered layouts/_login_panel.html.erb (10.9ms)
+  Rendered layouts/_header.html.erb (13.7ms)
+  Rendered layouts/_content.html.erb (0.8ms)
+Completed 200 OK in 14446ms (Views: 14433.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/assets/application.self-152ecf024d2f0ec07e1ae03c0840288cba962ba450d8f979b6ae7da6b751a604.css?body=1" for 10.240.0.203 at 2017-12-11 10:15:36 +0000
+Cannot render console from 10.240.0.203! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/friendships" for 10.240.1.60 at 2017-12-11 10:15:46 +0000
+Cannot render console from 10.240.1.60! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by FriendshipsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered friendships/index.html.erb within layouts/application (0.4ms)
+  Rendered layouts/_login_panel.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+Completed 200 OK in 42ms (Views: 39.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/chats" for 10.240.0.33 at 2017-12-11 10:15:54 +0000
+Cannot render console from 10.240.0.33! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ChatsController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" INNER JOIN "friendships" ON "users"."id" = "friendships"."friend_id" WHERE "friendships"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" INNER JOIN "friendships" ON "users"."id" = "friendships"."user_id" WHERE "friendships"."friend_id" = ?  [["friend_id", 1]]
+  [1m[36mChat Load (0.4ms)[0m  [1mSELECT "chats".* FROM "chats" INNER JOIN "chats_users" ON "chats"."id" = "chats_users"."chat_id" WHERE "chats_users"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered chats/_search_fridends.html.erb (0.9ms)
+  Rendered chats/_navside.html.erb (28.6ms)
+  Rendered chats/index.html.erb within layouts/application (29.9ms)
+  Rendered layouts/_login_panel.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+  Rendered layouts/_content.html.erb (0.2ms)
+Completed 200 OK in 185ms (Views: 141.2ms | ActiveRecord: 1.8ms)
+
+
+Started POST "/chats" for 10.240.0.127 at 2017-12-11 10:16:02 +0000
+Cannot render console from 10.240.0.127! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ChatsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"YS7lhRa/XXhDd7/qc2+j6gkkZ/kaVVfSt6e6zYLepQfHZlfJ9j9qLecNJUhRiTSEKTUHV3oHdY4xxmUi80tUoQ==", "users"=>"2", "button"=>""}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mChat Load (0.1ms)[0m  SELECT "chats".* FROM "chats" INNER JOIN "chats_users" ON "chats"."id" = "chats_users"."chat_id" WHERE "chats_users"."user_id" = ?  [["user_id", 1]]
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE (LOWER("users"."email") = LOWER('user2@test.com') AND "users"."id" != 2) LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE (LOWER("users"."email") = LOWER('user1@test.com') AND "users"."id" != 1) LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "chats" ("admin_id", "name", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["admin_id", 1], ["name", "user2-user1"], ["created_at", "2017-12-11 10:16:02.466954"], ["updated_at", "2017-12-11 10:16:02.466954"]]
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "chats_users" ("user_id", "chat_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 2], ["chat_id", 1], ["created_at", "2017-12-11 10:16:02.469272"], ["updated_at", "2017-12-11 10:16:02.469272"]]
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "chats_users" ("user_id", "chat_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["user_id", 1], ["chat_id", 1], ["created_at", "2017-12-11 10:16:02.471135"], ["updated_at", "2017-12-11 10:16:02.471135"]]
+  [1m[36m (11.6ms)[0m  [1mcommit transaction[0m
+Redirected to http://railschat-cuixuange.cs50.io:8080/chats/1
+Completed 302 Found in 61ms (ActiveRecord: 13.8ms)
+
+
+Started GET "/chats/1" for 10.240.1.203 at 2017-12-11 10:16:03 +0000
+Cannot render console from 10.240.1.203! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ChatsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mChat Load (0.3ms)[0m  [1mSELECT  "chats".* FROM "chats" WHERE "chats"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" INNER JOIN "chats_users" ON "users"."id" = "chats_users"."user_id" WHERE "chats_users"."chat_id" = ? AND "users"."id" = ? LIMIT 1  [["chat_id", 1], ["id", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" INNER JOIN "chats_users" ON "users"."id" = "chats_users"."user_id" WHERE "chats_users"."chat_id" = ?[0m  [["chat_id", 1]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" INNER JOIN "friendships" ON "users"."id" = "friendships"."friend_id" WHERE "friendships"."user_id" = ?  [["user_id", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" INNER JOIN "friendships" ON "users"."id" = "friendships"."user_id" WHERE "friendships"."friend_id" = ?[0m  [["friend_id", 1]]
+  [1m[35mChat Load (0.2ms)[0m  SELECT "chats".* FROM "chats" INNER JOIN "chats_users" ON "chats"."id" = "chats_users"."chat_id" WHERE "chats_users"."user_id" = ?  [["user_id", 1]]
+  Rendered chats/_search_fridends.html.erb (0.3ms)
+  Rendered chats/_navside.html.erb (9.6ms)
+  [1m[36mMessage Load (0.4ms)[0m  [1mSELECT "messages".* FROM "messages" WHERE "messages"."chat_id" = ?[0m  [["chat_id", 1]]
+  Rendered chats/_chat_info.html.erb (5.3ms)
+  Rendered chats/show.html.erb within layouts/application (22.9ms)
+  Rendered layouts/_login_panel.html.erb (1.8ms)
+  Rendered layouts/_header.html.erb (4.1ms)
+  Rendered layouts/_content.html.erb (0.2ms)
+Completed 200 OK in 133ms (Views: 109.4ms | ActiveRecord: 2.5ms)

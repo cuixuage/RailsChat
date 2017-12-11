@@ -13,7 +13,14 @@
 
           <li>
             <%= link_to chats_path, class: "dropbtn" do %>
-                ChatRoom  <i class="fa fa-wechat"></i>
+                ChatRoom  <i class="fa fa-book"></i>
+            <% end %>
+          </li>
+          
+          <!--加入 新的朋友请求标签 -->
+          <li>
+            <%= link_to friendships_path, class: "dropbtn" do %>
+                newfriend <i class="fa fa-wechat"></i>
             <% end %>
           </li>
 
