@@ -49,6 +49,11 @@ class UsersController < ApplicationController
     render json: @users.as_json
   end
 
+  def get_index_json
+    @users=User.get_search_friends(params, current_user)
+    render json: @users.as_json
+  end
+  
   private
 
   def user_params

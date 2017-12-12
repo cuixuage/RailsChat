@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :chats
 
   has_many :friendships
+  has_many :newfriendship
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
@@ -70,6 +71,10 @@ class User < ActiveRecord::Base
     User.all_except(current_user).all_except(current_user.friends).where("users.name LIKE ?", "%#{params[:query]}%")
   end
 
+  def self.get_search_friends(params, current_user)
+    User.all_except(current_user).all_except(current_user.friends).where("users.name LIKE ?", "%#{params[:query]}%")
+  end
+  
   private
 
   def downcase_email
