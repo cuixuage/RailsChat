@@ -15,19 +15,56 @@
         
             <div class="form-group">
               <%= f.label :email, "账号密码注册" %>
+              
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.text_field :name, class: 'form-control', placeholder: "输入名字" %>
+              </div>
+            </div>
+            
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
                 <%= f.email_field :email, class: 'form-control', placeholder: "输入邮箱" %>
               </div>
             </div>
-
+            
+            <!--
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.number_field :role, class: 'form-control', placeholder: "输入角色" %>
+              </div>
+            </div>
+            -->
+            
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
                 <%= f.password_field :password, class: 'form-control', placeholder: "输入密码" %>
               </div>
             </div>
-
+            
+            <!--
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.text_field :sex, class: 'form-control', placeholder: "输入性别" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.text_field :phonenumber, class: 'form-control', placeholder: "输入电话" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.text_field :status, class: 'form-control', placeholder: "输入状态" %>
+              </div>
+            </div>
+            -->
             <!--
             <div class="checkbox">
               <label><%= f.check_box :remember_me %>记住我</label>

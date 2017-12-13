@@ -89,6 +89,7 @@ Rails.application.routes.draw do
 
   get 'sessions/login' => 'sessions#new'
   post 'sessions/login' => 'sessions#create'
+  post 'sessions/sign' => 'sessions#create_sign'
   delete 'sessions/logout' => 'sessions#destroy'
 
 end
