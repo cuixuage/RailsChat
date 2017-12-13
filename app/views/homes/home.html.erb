@@ -7,11 +7,17 @@
       <% if current_user %>
           hello! <%= current_user.name %>
       <% else %>
-          <a href="#" class="btn btn-primary btn-large" id="login_panel"> Log in!</a>
+          <!-- <a href="#" class="btn btn-primary btn-large" id="login_panel"> Log in!</a> -->
+          <a data-target="#panel_modal" class="btn btn-primary btn-large" id="login_panel"> Log in!</a>
+          <a data-target="#panel_modal_sign" class="btn btn-primary btn-large" id="sign_panel"> Sign Up!</a>
+            <!--   data-toggle="modal"很关键  不加也行？ -->
+                <hr> 
+           
+          <div class="btn btn-info btn-block"> 
       <% end %>
-
     </p>
 
+    
     <h3>
       目前功能
     </h3>
@@ -39,4 +45,5 @@
 
   <hr>
   <hr>
+</div>
 </div>
