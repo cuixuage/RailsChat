@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :chats
 
   has_many :friendships
-  has_many :newfriendship
+  has_many :newfriendships
+  has_many :newfriends, :through => :newfriendships
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
@@ -67,12 +68,15 @@ class User < ActiveRecord::Base
     User.where("users.name LIKE ?", "%#{params[:query]}%")
   end
 
+#返回到 users controller 然后再按照json从controller返回前端
   def self.search_friends(params, current_user)
     User.all_except(current_user).all_except(current_user.friends).where("users.name LIKE ?", "%#{params[:query]}%")
   end
 
   def self.get_search_friends(params, current_user)
-    User.all_except(current_user).all_except(current_user.friends).where("users.name LIKE ?", "%#{params[:query]}%")
+    # User.all_except(current_user).all_except(current_user.friends)
+    # Newfriendship.find_by(new_friend_id :params[:query])
+    User.where("users.name LIKE ?", "%#{params[:query]}%")
   end
   
   private

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :friendships
+  
+  resources :newfriendships
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -58,6 +60,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :index_json
+      get :getnewfriend_index_json     #加入映射  url为 /users/getnewfriend_index_json  对应方法 users#getnewfriend_index_json
     end
   end
   resources :salaries

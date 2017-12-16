@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include SessionsHelper
-  before_action :set_user, except: [:index, :new, :index_json]
+  before_action :set_user, except: [:index, :new, :index_json, :getnewfriend_index_json]
   before_action :logged_in, only: [:show]
   before_action :correct_user, only: :show
 
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     render json: @users.as_json
   end
 
-  def get_index_json
+  def getnewfriend_index_json
     @users=User.get_search_friends(params, current_user)
     render json: @users.as_json
   end

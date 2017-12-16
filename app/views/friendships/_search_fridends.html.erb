@@ -6,14 +6,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">查找用户</h4>
+        <h4 class="modal-title">新的好友</h4>
       </div>
       <div class="modal-body">
 
         <form class="form-incline" id="search-friend">
 
           <div class="input-group">
-            <%= text_field_tag :query, params[:query], placeholder: "搜索用户", class: 'form-control' %>
+            <%= text_field_tag :query, params[:query], placeholder: "查看所有新好友", class: 'form-control' %>
             <span class="input-group-btn">
                     <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
@@ -42,17 +42,20 @@
         var valuesToSubmit = $(this).serialize();
         $.ajax({
             type: 'GET',
-            url: '/users/get_index_json',
+            url: '/users/getnewfriend_index_json',
+            // url: '/users/index_json',
             dataType: "JSON",
             data: valuesToSubmit,
+            
             success: function (data) {
                 $('#result tr').remove();
                 $('#result text').remove();
-
+                // window.alert(data);
                 if (data != "") {
                     $('#result thead').html("<tr><th>姓名</th><th>性别</th><th>联系方式</th><th></th></tr>");
                     $.each(data, function (index, user) {
-                        $('#result tbody').append("<tr><td>" + user.name + "</td><td>" + user.sex + "</td><td>" + user.email + "</td><td><a class='btn btn-success btn-xs' data-method='post' href='/friendships?friend_id=" + user.id + "'>添加</a></td></tr>");
+                        // $('#result tbody').append("<tr><td>" + user.user_id + "</td><td>" + user.new_friend_id + "</td><td><a class='btn btn-success btn-xs' data-method='post' href='/newfriendships?friend_id=" + user.new_friend_id + "'>同意</a></td></tr>");
+                         $('#result tbody').append("<tr><td>" + user.name + "</td><td>" + user.sex + "</td><td>" + user.email + "</td><td><a class='btn btn-success btn-xs' data-method='post' href='/newfriendships?friend_id=" + user.id + "'>同意</a></td></tr>");
                     });
                 } else {
                     $('#result tbody').append("<text>没有找到符合条件的用户</text>")
